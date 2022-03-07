@@ -182,7 +182,7 @@ def pr_setting(rs):
         pr_mask_c1.getSelector().setPattern(pr_msk_pattern)
         pr_mask_c1.getSelector().setStaticSelection(pr_msk_staticSelection)
 
-def _render(rencheck,mod,filename,savefilepath):
+def _render(mod,filename,savefilepath):
     start_frame,end_frame = time_range()
     minkey = (end_frame + start_frame)/2
     renderfile = ("C:/Program Files/Autodesk/Maya2019/bin/render.exe").replace("\\", "/")
@@ -197,18 +197,15 @@ def _render(rencheck,mod,filename,savefilepath):
 
     command = ''
     if os.path.isfile(saveFile):
-        if rencheck == 1:
-            if mod == 1:
-                command = ('"%s" -s %s -e %s -rd "%s" "%s"' % (renderfile,minkey,minkey, saveimage, saveFile))
-            if mod == 2:
-                command = ('"%s" -s %s -e %s -rd "%s" "%s"' % (renderfile,start_frame,end_frame, saveimage, saveFile))
-            with open(bat_file,'a') as f:
-                f.write(command + "\"\r\n")
-            f.close()
-        else:
-            return
+        if mod == 1:
+            command = ('"%s" -s %s -e %s -rd "%s" "%s"' % (renderfile,minkey,minkey, saveimage, saveFile))
+        if mod == 2:
+            command = ('"%s" -s %s -e %s -rd "%s" "%s"' % (renderfile,start_frame,end_frame, saveimage, saveFile))
+        with open(bat_file,'a') as f:
+            f.write(command + "\"\r\n")
+        f.close()
 
-def main(rencheck,mod,filename,filePath,savefilepath):
+def main(mod,filename,filePath,savefilepath):
     '''
     '''
     load_plugin('mtoa.mll')
@@ -254,9 +251,8 @@ def main(rencheck,mod,filename,filePath,savefilepath):
     cmds.file(f=True, s=True)
     logger.info(("%s Save Finally"% saveFile), exc_info=True)
 
-    print (rencheck)
-    print (mod)
-    _render(rencheck,mod,filename,savefilepath)
+    if mod is not 0:
+        _render(mod,filename,savefilepath)
 
 # if __name__ == '__main__':
 #     main()
