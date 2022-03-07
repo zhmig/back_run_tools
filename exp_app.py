@@ -3,13 +3,12 @@
 '''
 Author        : zhenghaoming
 Date          : 2022-02-27 18:07:56
-FilePath      : \BooBoo\exp_app.py
+FilePath      : d:\ScriptProjs\BooBoo\exp_app.py
 version       : 
 LastEditors   : zhenghaoming
-LastEditTime  : 2022-02-28 09:10:00
+LastEditTime  : 2022-03-07 18:17:48
 '''
-#!/usr/bin/env python
-# coding=utf-8
+
 import os,shutil
 import logging
 #--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
@@ -29,12 +28,19 @@ def main(self,file_list,savefilepath,scriptfile):
     step = 0
     step_val = 100 /(len(file_list))
 
+    if self.render_chbox.isChecked():
+        if self.sequence_radioBtn.isChecked():
+            ren_mod = 1
+        else:
+            ren_mod = 2
+    else:
+        ren_mod = 0
+
     try:
         import maya.standalone
         maya.standalone.initialize(name='python')
     except:
         return
-
 
     import core_script
     for filePath in file_list:
@@ -42,20 +48,14 @@ def main(self,file_list,savefilepath,scriptfile):
         print ("The full file name: %s\n" % filePath[1])
         print ("The savue path : %s\n" % savefilepath)
         print ("The script path : %s\n" % scriptfile)
-        if self.render_chbox.isChecked():
-            ren_check = 1
-            if self.sequence_radioBtn.isChecked():
-                ren_mod = 1
-            else:
-                ren_mod = 2
-        else :
-            ren_check = 0
-        core_script.main(ren_check,ren_mod,filePath[0],filePath[1],savefilepath)
+
+        core_script.main(ren_mod,filePath[0],filePath[1],savefilepath)
 
         step += step_val
         self.progressBar.setValue(step)
 
     maya.standalone.uninitialize()
+
     if os.path.isfile(("%s/Ren/temp/render_temp.bat" % (savefilepath))):
         os.system(("%s/Ren/temp/render_temp.bat" % (savefilepath)))
         mydir= ("%s/Ren/temp/render_temp.bat" % (savefilepath))
