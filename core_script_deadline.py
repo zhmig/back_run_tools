@@ -206,3 +206,4 @@ def main():
     saveFile = ("%s/%srd.mb" % (out_dir,filename[:-2]))
     cmds.file(rn=saveFile)
     cmds.file(f=True, s=True)
+main()
