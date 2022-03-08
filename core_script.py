@@ -198,9 +198,9 @@ def _render(mod,filename,savefilepath):
     command = ''
     if os.path.isfile(saveFile):
         if mod == 1:
-            command = ('"%s" -s %s -e %s -rd "%s" "%s"' % (renderfile,minkey,minkey, saveimage, saveFile))
+            command = ('"%s" -r arnold -s %s -e %s -rd "%s" "%s"' % (renderfile,minkey,minkey, saveimage, saveFile))
         if mod == 2:
-            command = ('"%s" -s %s -e %s -rd "%s" "%s"' % (renderfile,start_frame,end_frame, saveimage, saveFile))
+            command = ('"%s" -r arnold -s %s -e %s -rd "%s" "%s"' % (renderfile,start_frame,end_frame, saveimage, saveFile))
         with open(bat_file,'a') as f:
             f.write(command + "\"\r\n")
         f.close()
