@@ -170,7 +170,7 @@ def pr_setting(rs):
         pr_mask_c1.getSelector().setPattern(pr_msk_pattern)
         pr_mask_c1.getSelector().setStaticSelection(pr_msk_staticSelection)
 
-def main(filename,savefilepath):
+def main():
     '''
     '''
     load_plugin('mtoa.mll')
